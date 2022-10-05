@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Information</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background-color: blue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    #value {
+        border: none;
+        border-bottom: 1px solid black;
+        width: 210px;
+        font-size: medium;
+        padding: 3px 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        /* text-align: center; */
+    }
+
+    #value:focus {
+        outline: none;
+    }
+
+    button {
+        background-color: blue;
+        border-radius: 20px;
+        border: none;
+        padding: 6px 8px;
+        font-size: medium;
+        margin-left: 10px;
+        color: white;
+    }
+
+    #info {
+        display: block;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        display: none;
+    }
+
+    #info img {
+        margin-top: 30px;
+        width: 180px;
+    }
+
+    #name {
+        font-size: 20px;
+        letter-spacing: 2px;
+        max-width: 280px;
+        text-align: center;
+        font-weight: 700;
+        color: black;
+    }
+
+    .imgcontainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    span {
+        font-weight: normal;
+        color: rgb(90, 90, 90);
+    }
+
+    div {
+        margin: 10px 0;
+        font-weight: 600;
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <input type="text" id="value" placeholder="Enter a county name here...">
+        <button onclick=getdata();>Search</button>
+        <div id="info">
+            <div class="imgcontainer"> <img src="" id="image"><br><span id="name"></span></div>
+            <div>Capital : <span id="capital"></span></div>
+            <div>Continent : </span><span id="rgn"></span></div>
+            <div>Population : <span id="population"></span></div>
+            <div>Common Languages : <span id="lang"></span><span id="lang1"></span></div>
+        </div>
+    </div>
+
+    <script>
+        let name = document.getElementById("name");
+        // const key = `b4e368b0016514973e92bf7b969f5c1b`
+        let capitals = document.getElementById("capital");
+        let countryflag = document.getElementById("image");
+        let reigion = document.getElementById("rgn");
+        let ppltion = document.getElementById("population");
+        let lang = document.getElementById("lang");
+        let lang1 = document.getElementById("lang1");
+        function getdata() {
+            let country = document.getElementById("value").value;
+            const url = `https://restcountries.com/v2/name/${country}?fullText=true`;
+            fetch(url).then(function (response) {
+                return response.json();
+            })
+                .then(function (jsondata) {
+                    console.log(country)
+                    console.log(jsondata);
+                    document.getElementById("info").style.display="block"
+                    // info.style.display = "block";
+                    name.innerHTML = jsondata[0].name.toUpperCase();
+                    countryflag.src = jsondata[0].flags.png;
+                    capitals.innerHTML = jsondata[0].capital;
+                    reigion.innerHTML = jsondata[0].region;
+                    ppltion.innerHTML = jsondata[0].population;
+                    lang.innerHTML = jsondata[0].languages[0].name;
+
+                })
+        }
+    </script>
+</body>
+
+</html>
