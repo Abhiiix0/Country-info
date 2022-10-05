@@ -118,7 +118,7 @@
         let lang1 = document.getElementById("lang1");
         function getdata() {
             let country = document.getElementById("value").value;
-            const url = `https://restcountries.com/v2/name/${country}?fullText=true`;
+            const url = `https://restcountries.com/v2/name/${country.trim()}?fullText=true`;
             fetch(url).then(function (response) {
                 return response.json();
             })
